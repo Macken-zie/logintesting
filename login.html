@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Authentication Login</title>
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDF58AXVXPl8RSuwxxs1F-PDvF3p_gH2aA",
+      authDomain: "userauthtesting-eb606.firebaseapp.com",
+      projectId: "userauthtesting-eb606",
+      storageBucket: "userauthtesting-eb606.appspot.com",
+      messagingSenderId: "274194198524",
+      appId: "1:274194198524:web:cd820a4820a21f5ef18c79",
+      measurementId: "G-846JWK6SCM"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Login function
+    async function login(email, password) {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log("User  found:", userCredential.user);
+      } catch (error) {
+        console.error("No user found or incorrect credentials:", error.message);
+      }
+    }
+
+    // Form submission event listener
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("login-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        await login(email, password);
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Firebase Authentication Login</h1>
+  <form id="login-form">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br><br>
+    <button type="submit">Login</button>
+  </form>
+</body>
+</html>
